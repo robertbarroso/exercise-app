@@ -103,3 +103,16 @@ app.put(
     }
   }),
 );
+
+// DELETE /exercises/:_id
+app.delete(
+  "/exercises/:id",
+  asyncHandler(async (req, res) => {
+    const resultExercise = await exercises.deleteExercise(req.params.id);
+    if (!resultExercise) {
+      res.status(404).json(ERROR_NOT_FOUND);
+    } else {
+      return res.status(204).send();
+    }
+  }),
+);

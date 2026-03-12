@@ -63,4 +63,16 @@ const updateExercise = async (filter, resBody) => {
   return query;
 };
 
-export { connect, createExercise, getExercises, getExercise, updateExercise };
+const deleteExercise = async (filter) => {
+  const query = await Exercise.deleteOne({ _id: filter });
+  return query.deletedCount;
+};
+
+export {
+  connect,
+  createExercise,
+  getExercises,
+  getExercise,
+  updateExercise,
+  deleteExercise,
+};
