@@ -2,18 +2,28 @@
   "name": "exercises_rest",
   "version": "1.0.0",
   "description": "",
+  "homepage": "https://github.com/robertbarroso/exercise-app#readme",
+  "bugs": {
+    "url": "https://github.com/robertbarroso/exercise-app/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robertbarroso/exercise-app.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
   "main": "exercise_controller.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon exercises_controller.mjs"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "dotenv": "^16.5.0",
     "express": "^4.21.2",
     "express-async-handler": "^1.2.0",
     "mongoose": "^8.15.0",
     "nodemon": "^3.1.10"
-  }
+  },
+  "devDependencies": {}
 }
