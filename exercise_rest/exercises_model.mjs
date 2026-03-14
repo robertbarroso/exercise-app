@@ -1,5 +1,5 @@
 /**
- * Add your first name and last name.
+ * Robert Barroso
  */
 import mongoose, { mongo } from "mongoose";
 import "dotenv/config";

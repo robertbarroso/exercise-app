@@ -6,7 +6,7 @@ import express from "express";
 import asyncHandler from "express-async-handler";
 import * as exercises from "./exercises_model.mjs";
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 const app = express();
 
 function isDateValid(date) {
@@ -25,6 +25,15 @@ app.listen(PORT, async () => {
 });
 
 function validateInput(req) {
+  const allowedProps = ["name", "reps", "weight", "unit", "date"];
+
+  if (
+    Object.keys(req.body).length !== 5 ||
+    !Object.keys(req.body).every((key) => allowedProps.includes(key))
+  ) {
+    return false;
+  }
+
   if (
     req.body.name === undefined ||
     req.body.reps === undefined ||
@@ -37,7 +46,8 @@ function validateInput(req) {
     req.body.weight <= 0 ||
     !Number.isInteger(req.body.weight) ||
     (req.body.unit !== "kgs" && req.body.unit !== "lbs") ||
-    isDateValid(req.body.date) === false
+    isDateValid(req.body.date) === false ||
+    typeof req.body.name !== "string"
   ) {
     return false;
   }
@@ -49,7 +59,7 @@ app.post(
   "/exercises",
   asyncHandler(async (req, res) => {
     if (!validateInput(req)) {
-      res.status(400).json(ERROR_INVALID_REQUEST);
+      return res.status(400).json(ERROR_INVALID_REQUEST);
     }
     const newExercise = await exercises.createExercise(
       req.body.name,
@@ -78,7 +88,7 @@ app.get(
   asyncHandler(async (req, res) => {
     const resultExercise = await exercises.getExercise(req.params.id);
     if (!resultExercise) {
-      res.status(404).json(ERROR_NOT_FOUND);
+      return res.status(404).json(ERROR_NOT_FOUND);
     } else {
       res.status(200).json(resultExercise);
     }
@@ -90,14 +100,14 @@ app.put(
   "/exercises/:id",
   asyncHandler(async (req, res) => {
     if (!validateInput(req)) {
-      res.status(400).json(ERROR_INVALID_REQUEST);
+      return res.status(400).json(ERROR_INVALID_REQUEST);
     }
     const resultExercise = await exercises.updateExercise(
       req.params.id,
       req.body,
     );
     if (!resultExercise) {
-      res.status(404).json(ERROR_NOT_FOUND);
+      return res.status(404).json(ERROR_NOT_FOUND);
     } else {
       res.status(200).json(resultExercise);
     }
@@ -110,7 +120,7 @@ app.delete(
   asyncHandler(async (req, res) => {
     const resultExercise = await exercises.deleteExercise(req.params.id);
     if (!resultExercise) {
-      res.status(404).json(ERROR_NOT_FOUND);
+      return res.status(404).json(ERROR_NOT_FOUND);
     } else {
       return res.status(204).send();
     }
