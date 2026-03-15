@@ -107,7 +107,7 @@ function EditExercise() {
               />
             </td>
             <td>
-              <button Click={handleSave}>Save</button>
+              <button onClick={handleSave}>Save</button>
             </td>
           </tr>
         </tbody>

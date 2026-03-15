@@ -2,7 +2,7 @@ import "../App.css";
 import RemoveEntry from "./RemoveEntry";
 import EditEntry from "./EditEntry";
 
-function OrderRow({ Entry }) {
+function ExerciseRow({ Entry, onDelete }) {
   return (
     <tr>
       <td>{Entry.name}</td>
@@ -11,7 +11,7 @@ function OrderRow({ Entry }) {
       <td>{Entry.unit}</td>
       <td>{Entry.date}</td>
       <td>
-        <RemoveEntry Entry={Entry} />
+        <RemoveEntry Entry={Entry} onDelete={onDelete} />
       </td>
       <td>
         <EditEntry Entry={Entry} />
@@ -20,4 +20,4 @@ function OrderRow({ Entry }) {
   );
 }
 
-export default OrderRow;
+export default ExerciseRow;

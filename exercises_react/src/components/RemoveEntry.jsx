@@ -1,14 +1,19 @@
-import { useNavigate } from "react-router-dom";
 import { FaTrash } from "react-icons/fa";
 
-function RemoveEntry({ Entry }) {
-  const navigate = useNavigate();
-
+function RemoveEntry({ Entry, onDelete }) {
   const handleRemoval = async () => {
-    await fetch(`/exercises/${Entry._id}`, {
-      method: "DELETE",
-    });
-    navigate("/");
+    if (onDelete) {
+      await onDelete(Entry._id);
+    } else {
+      const response = await fetch(`/exercises/${Entry._id}`, {
+        method: "DELETE",
+      });
+      if (response.status !== 204) {
+        console.error(
+          `Failed to delete exercise id=${Entry._id}, status=${response.status}`,
+        );
+      }
+    }
   };
 
   return (
